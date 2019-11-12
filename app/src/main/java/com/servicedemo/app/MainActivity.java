@@ -9,18 +9,28 @@ import androidx.work.WorkManager;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private TextView txtSuccess;
+    private TextView txtFail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewById(R.id.btnStartService).setOnClickListener(this);
+        txtSuccess = findViewById(R.id.txtSucess);
+        txtFail = findViewById(R.id.txtFailed);
+        updateValue();
+    }
 
-
+    private void updateValue() {
+        txtSuccess.setText("" + Preferences.getInt(this, Preferences.SUCCESS));
+        txtFail.setText("" + Preferences.getInt(this, Preferences.FAILED));
     }
 
     @Override

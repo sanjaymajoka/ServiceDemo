@@ -14,6 +14,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import androidx.core.app.NotificationCompat;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MyService extends Service {
 
@@ -49,7 +52,7 @@ public class MyService extends Service {
             }
         };
 
-        timer.schedule(timerTask, 1000L, 1000L * 2);
+        timer.schedule(timerTask, 1000L, 1000L * 60L * 2);
     }
 
     @Override
@@ -69,6 +72,30 @@ public class MyService extends Service {
 
     private void workToDo() {
         Log.e("MyService", "Running.....");
+
+        RetrofitClient.getRetrofit().create(ApiInterface.class)
+                .getPostTest(new RequestModel("" + System.currentTimeMillis()))
+                .enqueue(new Callback<SuccessModel>() {
+                    @Override
+                    public void onResponse(Call<SuccessModel> call, Response<SuccessModel> response) {
+                        SuccessModel model = response.body();
+                        if (model.getStatus().equals("400")) {
+
+                            updateInt(Preferences.SUCCESS);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<SuccessModel> call, Throwable t) {
+                        updateInt(Preferences.FAILED);
+                    }
+                });
+    }
+
+    private void updateInt(String key) {
+        int value = Preferences.getInt(getApplicationContext(), key);
+        value++;
+        Preferences.putInt(getApplicationContext(), key, value);
     }
 
     private void createNotificationChannel() {
