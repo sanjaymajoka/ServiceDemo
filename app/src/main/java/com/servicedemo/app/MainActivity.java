@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtSuccess = findViewById(R.id.txtSucess);
         txtFail = findViewById(R.id.txtFailed);
         updateValue();
+
+        Utils.callAPi(this);
     }
 
     private void updateValue() {

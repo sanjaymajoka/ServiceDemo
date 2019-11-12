@@ -73,30 +73,10 @@ public class MyService extends Service {
     private void workToDo() {
         Log.e("MyService", "Running.....");
 
-        RetrofitClient.getRetrofit().create(ApiInterface.class)
-                .getPostTest(new RequestModel("" + System.currentTimeMillis()))
-                .enqueue(new Callback<SuccessModel>() {
-                    @Override
-                    public void onResponse(Call<SuccessModel> call, Response<SuccessModel> response) {
-                        SuccessModel model = response.body();
-                        if (model.getStatus().equals("400")) {
 
-                            updateInt(Preferences.SUCCESS);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<SuccessModel> call, Throwable t) {
-                        updateInt(Preferences.FAILED);
-                    }
-                });
     }
 
-    private void updateInt(String key) {
-        int value = Preferences.getInt(getApplicationContext(), key);
-        value++;
-        Preferences.putInt(getApplicationContext(), key, value);
-    }
+
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
