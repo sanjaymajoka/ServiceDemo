@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void updateValue() {
-        txtSuccess.setText("" + Preferences.getInt(this, Preferences.SUCCESS));
-        txtFail.setText("" + Preferences.getInt(this, Preferences.FAILED));
+        txtSuccess.setText("Success : " + Preferences.getInt(this, Preferences.SUCCESS));
+        txtFail.setText("Failed : " + Preferences.getInt(this, Preferences.FAILED));
     }
 
     @Override
