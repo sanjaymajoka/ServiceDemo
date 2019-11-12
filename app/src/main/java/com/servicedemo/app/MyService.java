@@ -60,6 +60,7 @@ public class MyService extends Service {
         super.onDestroy();
         stopTimer();
         Log.e("MyService", "Stopped");
+        Utils.callAPi(getApplicationContext());
     }
 
     private void stopTimer() {
@@ -73,9 +74,8 @@ public class MyService extends Service {
     private void workToDo() {
         Log.e("MyService", "Running.....");
 
-
+        Utils.callAPi(getApplicationContext());
     }
-
 
 
     private void createNotificationChannel() {
